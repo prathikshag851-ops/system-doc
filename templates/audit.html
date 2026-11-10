@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}
+<h2>Audit trail</h2><p>Latest 500 events. Verify integrity with <code>flask --app app verify-audit</code>.</p>
+<table><tr><th>Time (UTC)</th><th>Actor</th><th>Action</th><th>Document</th><th>Result</th><th>Reason</th><th>Hash</th></tr>
+{% for r in rows %}<tr><td>{{ r.occurred_at }}</td><td>{{ r.actor_name }}</td><td>{{ r.action }}</td>
+<td>{{ r.document_id or "—" }}</td><td>{{ r.outcome }}</td><td>{{ r.reason }}</td><td><small>{{ r.entry_hash[:14] }}…</small></td></tr>{% endfor %}</table>
+{% endblock %}

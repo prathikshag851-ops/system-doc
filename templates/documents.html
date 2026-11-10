@@ -1,0 +1,16 @@
+{% extends "base.html" %}{% block body %}
+<h2>Documents</h2>
+<p>Signed in as <b>{{ user.username }}</b> ({{ user.role }}) · Department: {{ user.department or "—" }}</p>
+{% if documents %}
+<table><tr><th>Title</th><th>Original file</th><th>Department</th><th>Action</th></tr>
+{% for d in documents %}<tr><td>{{ d.title }}</td><td>{{ d.original_name }}</td><td>{{ d.department }}</td>
+<td><a href="{{ url_for('download', doc_id=d.id) }}">Download</a>
+<form method="post" action="{{ url_for('delete_document', doc_id=d.id) }}" style="display:inline">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Delete</button></form>
+{% if user.role == 'admin' or user.id == d.owner_id %}
+<form method="post" action="{{ url_for('grant', doc_id=d.id) }}">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input name="username" placeholder="Grant to username" required><button>Grant</button></form>{% endif %}
+</td></tr>{% endfor %}</table>
+{% else %}<p>No documents are available to your account.</p>{% endif %}
+{% endblock %}

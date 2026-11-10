@@ -1,0 +1,6 @@
+{% extends "base.html" %}{% block body %}
+<h2>Upload document</h2><p>Maximum 10 MB. Allowed: PDF, DOCX, TXT, PNG, JPG.</p>
+<form method="post" enctype="multipart/form-data">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<p><input name="title" placeholder="Document title" required></p>
+<p><input type="file" name="file" required></p><button>Upload</button></form>{% endblock %}

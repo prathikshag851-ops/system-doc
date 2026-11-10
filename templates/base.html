@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Document Portal</title>
+<style>
+body{font-family:Arial,sans-serif;max-width:950px;margin:35px auto;padding:0 18px;color:#222}
+nav{display:flex;gap:18px;align-items:center;border-bottom:1px solid #ddd;padding-bottom:14px}
+a{color:#1459a6} .flash{background:#fff4ce;padding:10px;margin:12px 0}
+.card{border:1px solid #ddd;border-radius:8px;padding:14px;margin:12px 0}
+input,button{padding:9px;margin:5px 0} table{border-collapse:collapse;width:100%}
+td,th{border:1px solid #ddd;padding:8px;text-align:left} small{color:#555}
+</style></head><body>
+<nav><strong>Secure Document Portal</strong><a href="{{ url_for('documents') }}">Documents</a>
+{% if session.get('user_id') %}<a href="{{ url_for('upload') }}">Upload</a>
+<a href="{{ url_for('audit_view') }}">Audit log (admin)</a>
+<form method="post" action="{{ url_for('logout') }}" style="margin-left:auto">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button>Logout</button></form>{% endif %}</nav>
+{% for message in get_flashed_messages() %}<div class="flash">{{ message }}</div>{% endfor %}
+{% block body %}{% endblock %}
+</body></html>
